@@ -1,33 +1,29 @@
 var ScoreCard = function () {
-  this.results = [];
   this.score = 0;
   this.frames = [];
+  this.currentFrameNumber = 1;
 };
 
-ScoreCard.prototype.recordFrame = function(frame){
+ScoreCard.prototype.startNewFrame = function (frame = new Frame(this.currentFrameNumber) ) {
+  this.currentFrame = frame;
+};
+
+ScoreCard.prototype.recordFrame = function(frame = this.currentFrame){
   this.frames.push(frame);
+  this.currentFrameNumber ++;
 };
 
-ScoreCard.prototype.newFrame = function(frame){
-  this.frame = new Frame();
+ScoreCard.prototype.addSpareBonusToPreviousFrame = function(ball1 = this.currentFrame.ball1) {
+  this.frames[this.frames.length-1].updateWithSpareBonus(this.currentFrame.ball1);
 };
 
-// ScoreCard.prototype.calculateScore = function(ball, pins, hasSpare, hasStrike) {
-//   if ((hasStrike === true)||(hasSpare === true && ball === 1)){
-//     this.score = pins * 2;
-//   }else{
-//       this.score = pins;
-//   };
-//
-// };
 
-// ScoreCard.prototype.recordScore = function(score){
-//   this.results.push(score);
-// };
+ScoreCard.prototype.addStrikeBonusToPreviousFrame = function(ball1 = this.currentFrame.ball1) {
+  this.frames[this.frames.length-1].updateWithStrikeBonus(this.currentFrame.ball1, this.currentFrame.ball2);
+};
 
-ScoreCard.prototype.calcTotal = function(){
-  this.total = 0;
-  for (var scoreIndex =0; scoreIndex < this.results.length; scoreIndex++){
-    this.total = this.total + this.results[scoreIndex];
+ScoreCard.prototype.calcTotal = function() {
+  for (var i = 0; i < this.frames.length; i++) {
+    this.score += (this.frames[i].ball1 + this.frames[i].ball2);
   };
 };
