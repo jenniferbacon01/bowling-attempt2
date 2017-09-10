@@ -1,5 +1,5 @@
 var Player = function () {
-  this.frame = 0;
+  // this.frame = 0;
   this.ball = 1;
   this.bowled = 0;
   this.hasSpare = false;
@@ -8,17 +8,17 @@ var Player = function () {
 };
 
 
-Player.prototype.bowl = function(number) {
-  if (this.ball === 1){
-    this.ball1 = parseInt(number);
-  }else if (this.ball === 2){
-    this.ball2 = parseInt(number);
-  }else if (this.ball === 3){
-    this.ball3 = number;
-  };
-  this.currentPins = parseInt(number);
-  this.bowled ++;
-};
+// Player.prototype.bowl = function(number) {
+//   if (this.ball === 1){
+//     this.ball1 = parseInt(number);
+//   }else if (this.ball === 2){
+//     this.ball2 = parseInt(number);
+//   }else if (this.ball === 3){
+//     this.ball3 = number;
+//   };
+//   this.currentPins = parseInt(number);
+//   this.bowled ++;
+// };
 
 Player.prototype.switchBall = function() {
   if(this.bowled === 20 && this.ball === 2 && (this.hasSpare === true|| this.hasStrike == true) ) {
@@ -58,11 +58,11 @@ Player.prototype.calcSparesAndStrikes = function(){
 };
 
 // only do these after ball2
-Player.prototype.updateFrame = function (){
-  if (this.bowled % 2 == 0){
-    this.frame ++;
-  };
-};
+// Player.prototype.updateFrame = function (){
+//   if (this.bowled % 2 == 0){
+//     this.frame ++;
+//   };
+// };
 
 // only do these after ball2
 Player.prototype.resetBalls = function (){
