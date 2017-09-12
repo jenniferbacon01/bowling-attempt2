@@ -9,7 +9,7 @@ describe('ScoreCard', function() {
       ball1: 5,
       ball2: 5,
       isSpare: true,
-      updateWithSpareBonus: function(number){
+      updateWithBonus: function(number){
         this.spareBonusDone = true;
       }
     };
@@ -20,8 +20,8 @@ describe('ScoreCard', function() {
     frame3 = {
       ball1: 10,
       ball2: 0,
-      isSpare: true,
-      updateWithStrikeBonus: function(number){
+      isStrike: true,
+      updateWithBonus: function(number){
         this.strikeBonusDone = true;
       }
     };
@@ -49,19 +49,20 @@ describe('ScoreCard', function() {
   it('adds bonus scores for spares to the previous frame after current frame has been played', function(){
     scorecard.recordFrame(frame);
     scorecard.startNewFrame(frame2);
-    scorecard.addSpareBonusToPreviousFrame(frame2.ball1);
+    scorecard.addBonuses();
     expect(frame.spareBonusDone).toEqual(true);
   });
 
   it('adds bonus scores for strikes to the previous frame after current frame has been played', function(){
     scorecard.recordFrame(frame3);
     scorecard.startNewFrame(frame2);
-    scorecard.addStrikeBonusToPreviousFrame(frame2.ball1, frame2.ball2);
+    scorecard.addBonuses();
     expect(frame3.strikeBonusDone).toEqual(true);
   });
-
+  //
   it('calculates the total score', function(){
     scorecard.recordFrame(frame2);
+    scorecard.startNewFrame(frame4);
     scorecard.recordFrame(frame4);
     scorecard.calcTotal();
     expect(scorecard.score).toEqual(14);
